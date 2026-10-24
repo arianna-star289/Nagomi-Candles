@@ -114,3 +114,5 @@ y Node.js para la parte del servidor.
 
 ¿Dudas sobre un aroma o quieres hacer un pedido?
 Escríbenos a **ariannajibajaramirez@gmail.com** 🌊
+
+Mi página publicada: https://arianna-star289.github.io/Nagomi-Candles/.
