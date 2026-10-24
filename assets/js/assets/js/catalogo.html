@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo · Nagomi Candles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" width="46" height="46" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#B9E7E4"/><stop offset="0.55" stop-color="#D8C6F2"/><stop offset="1" stop-color="#F7C6D9"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+        <path d="M2 80 Q 22 66, 42 80 T 82 80 T 122 80 V122 H2 Z" fill="#7FC4C8" opacity="0.65"/>
+        <path d="M2 92 Q 22 78, 42 92 T 82 92 T 122 92 V122 H2 Z" fill="#5AAEB3" opacity="0.75"/>
+        <path d="M60 40 C 55 48, 55 55, 60 60 C 65 55, 65 48, 60 40 Z" fill="#FFD897"/>
+        <path d="M60 46 C 57.5 50, 57.5 53.5, 60 56 C 62.5 53.5, 62.5 50, 60 46 Z" fill="#FFF3D6"/>
+        <path d="M92 30 l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity="0.95"/>
+      </svg>
+      <span class="logo-text">
+        <span class="logo-title">Nagomi<em>Candles</em></span>
+        <span class="logo-slogan">respira el mar, enciende la calma</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" data-page="index.html">Inicio</a>
+      <a href="catalogo.html" data-page="catalogo.html">Catálogo</a>
+      <a href="contacto.html" data-page="contacto.html">Contacto</a>
+      <a href="admin/login.html" class="nav-admin-link">Panel admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">La colección</p>
+      <h1>Elige tu aroma</h1>
+      <p>Filtra por familia olfativa y arma tu propia escena de calma. <span class="badge-demo" data-demo-badge style="display:none">Modo demostración (sin backend conectado)</span></p>
+    </div>
+  </section>
+
+  <section class="aromas">
+    <div class="wrap">
+      <!-- React monta aquí todo el catálogo (filtros, favoritas y tarjetas) -->
+      <div id="root"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="logo-title footer-logo">Nagomi<em>Candles</em></span>
+      <p class="footer-slogan">respira el mar, enciende la calma</p>
+    </div>
+    <div class="footer-contact">
+      <p><a href="mailto:ariannajibajaramirez@gmail.com">ariannajibajaramirez@gmail.com</a></p>
+      <p>@nagomicandles</p>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Nagomi Candles. Hecho con calma, en tandas pequeñas.</p>
+</footer>
+
+<button class="ai-toggle" id="aiToggle" aria-expanded="false" aria-controls="aiPanel" aria-label="Abrir asistente Nagomi">🌊</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="Asistente de Nagomi Candles">
+  <div class="ai-header"><strong>Asistente Nagomi</strong><span>Te ayudo a elegir tu aroma</span></div>
+  <div class="ai-body" id="aiBody"></div>
+  <div class="ai-quick" id="aiQuick"></div>
+  <form class="ai-input-row" id="aiForm">
+    <input type="text" id="aiInput" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+</div>
+
+<!-- React 18 por CDN (sin build): ideal para publicar directo en GitHub Pages -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<!-- Babel traduce JSX a JavaScript en el navegador -->
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script type="text/babel">
+/**
+ * Catálogo de Nagomi Candles hecho con React.
+
+ */
+const { useState, useEffect } = React;
+
+const FAV_KEY = "nagomi_favorites";
+
+const FILTERS = [
+  { key: "todos", label: "Todos" },
+  { key: "lavanda", label: "Lavanda" },
+  { key: "vainilla", label: "Vainilla" },
+  { key: "citrico", label: "Cítrico" },
+  { key: "oceano", label: "Océano" },
+  { key: "floral", label: "Floral" },
+  { key: "matcha", label: "Té verde" }
+];
+
+// Lee las favoritas guardadas; si localStorage falla, empezamos con lista vacía.
+function loadFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem(FAV_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function CandleArt({ candle }) {
+  return (
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={"Vela " + candle.name}>
+      <ellipse cx="60" cy="104" rx="30" ry="6" fill={candle.wax} opacity="0.35" />
+      <rect x="32" y="46" width="56" height="56" rx="14" fill={candle.jar} stroke="rgba(59,53,80,0.12)" strokeWidth="1.5" />
+      <rect x="32" y="46" width="56" height="18" rx="9" fill={candle.wax} />
+      <rect x="58" y="20" width="4" height="28" rx="2" fill="#C9A97E" />
+      <path className="flame" d="M60 6 C 52 16, 52 26, 60 32 C 68 26, 68 16, 60 6 Z" fill="#FFD897" />
+      <path className="flame" d="M60 14 C 56 20, 56 25, 60 28 C 64 25, 64 20, 60 14 Z" fill="#FFF3D6" />
+      <circle cx="40" cy="90" r="2" fill="#fff" opacity="0.5" />
+      <circle cx="80" cy="80" r="1.6" fill="#fff" opacity="0.4" />
+    </svg>
+  );
+}
+
+function StateBox({ loading, children }) {
+  return (
+    <div className="state-box">
+      {loading && <div className="spinner"></div>}
+      {children}
+    </div>
+  );
+}
+
+function FilterBar({ active, onChange }) {
+  return (
+    <div className="filters" role="tablist" aria-label="Filtrar velas por aroma">
+      {FILTERS.map((f) => (
+        <button
+          key={f.key}
+          className={"filter-btn" + (active === f.key ? " is-active" : "")}
+          onClick={() => onChange(f.key)}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function CandleCard({ candle, isFavorite, onToggleFavorite }) {
+  const lowStock = candle.stock !== undefined && candle.stock <= 5;
+  return (
+    <article className="candle-card">
+      <button
+        className={"fav-btn" + (isFavorite ? " is-on" : "")}
+        onClick={() => onToggleFavorite(candle.id)}
+        aria-pressed={isFavorite}
+        aria-label={isFavorite ? "Quitar de favoritas" : "Guardar en favoritas"}
+      >
+        {isFavorite ? "♥" : "♡"}
+      </button>
+      <div className="candle-art">
+        <CandleArt candle={candle} />
+      </div>
+      <span className={"candle-tag tag-" + candle.scent}>{candle.scentLabel}</span>
+      <h3 className="candle-name">{candle.name}</h3>
+      <p className="candle-desc">{candle.desc}</p>
+      {candle.stock !== undefined && (
+        <p className={"candle-stock" + (lowStock ? " is-low" : "")}>
+          {lowStock ? "Últimas " + candle.stock + " unidades" : candle.stock + " disponibles"}
+        </p>
+      )}
+      <div className="candle-footer">
+        <span className="candle-price">${candle.price}</span>
+        <a className="btn btn-ghost btn-sm" href={"contacto.html?vela=" + encodeURIComponent(candle.name)}>
+          Consultar
+        </a>
+      </div>
+    </article>
+  );
+}
+
+function App() {
+  const [filter, setFilter] = useState("todos");
+  const [candles, setCandles] = useState([]);
+  const [status, setStatus] = useState("loading"); // "loading" | "error" | "ready"
+  const [errorMsg, setErrorMsg] = useState("");
+  const [favorites, setFavorites] = useState(loadFavorites);
+  const [onlyFavorites, setOnlyFavorites] = useState(false);
+
+  // Cada vez que cambia el filtro, pedimos las velas otra vez.
+  useEffect(() => {
+    let cancelled = false; // evita pintar datos viejos si el usuario cambia rápido de filtro
+    setStatus("loading");
+    NagomiAPI.getProducts(filter)
+      .then((list) => {
+        if (cancelled) return;
+        setCandles(list);
+        setStatus("ready");
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setErrorMsg(err.message || "");
+        setStatus("error");
+      });
+    return () => { cancelled = true; };
+  }, [filter]);
+
+  // Cada vez que cambian las favoritas, las guardamos en el navegador.
+  useEffect(() => {
+    try {
+      localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
+    } catch (e) { /* si no se puede guardar, la app sigue funcionando */ }
+  }, [favorites]);
+
+  function toggleFavorite(id) {
+    setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }
+
+  const visible = onlyFavorites ? candles.filter((c) => favorites.includes(c.id)) : candles;
+
+  return (
+    <div>
+      <FilterBar active={filter} onChange={setFilter} />
+
+      <div className="fav-toolbar">
+        <button
+          className={"filter-btn" + (onlyFavorites ? " is-active" : "")}
+          onClick={() => setOnlyFavorites(!onlyFavorites)}
+        >
+          ♥ Mis favoritas ({favorites.length})
+        </button>
+      </div>
+
+      {status === "loading" && <StateBox loading>Cargando el catálogo…</StateBox>}
+      {status === "error" && <StateBox>No pudimos cargar el catálogo ahora mismo. {errorMsg}</StateBox>}
+      {status === "ready" && visible.length === 0 && (
+        <StateBox>
+          {onlyFavorites
+            ? "Aún no tienes favoritas en este filtro. Toca el ♡ de una vela para guardarla 🌊"
+            : "No hay velas con ese aroma todavía. Prueba con otro filtro 🌊"}
+        </StateBox>
+      )}
+      {status === "ready" && visible.length > 0 && (
+        <div className="candle-grid">
+          {visible.map((c) => (
+            <CandleCard
+              key={c.id}
+              candle={c}
+              isFavorite={favorites.includes(c.id)}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+<script src="assets/js/ai-assistant.js"></script>
+</body>
+</html>

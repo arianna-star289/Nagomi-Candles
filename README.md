@@ -1,77 +1,73 @@
 # 🕯️ Nagomi Candles
 
-Velas aromáticas artesanales inspiradas en el anime y el océano.
-*"Respira el mar, enciende la calma."*
+*Respira el mar, enciende la calma.*
 
-Sitio web estático con catálogo de velas filtrable por aroma (lavanda, vainilla,
-cítrico, océano, floral, té verde), carrito de compras y un control de
-presupuesto en tiempo real (barra tipo "marea" que sube según lo que gastas).
+Nagomi Candles es una tienda en línea de velas aromáticas hechas a mano,
+inspiradas en dos cosas que me encantan: el anime y el mar.
 
-## Estructura del proyecto
+El nombre viene de una palabra japonesa, **nagomi** (和み), que describe esa
+sensación de paz suave que sientes cuando el mar está tranquilo o cuando
+termina un episodio que te dejó el corazón en calma. Quise que cada vela
+se sintiera así.
+
+Este es mi proyecto final de la Ruta Avanzada de Jóvenes Creativos.
+
+---
+
+## ¿Qué se puede hacer en la página?
+
+- **Conocer la marca** en la página de inicio.
+- **Ver el catálogo** de velas y filtrarlas por aroma: lavanda, vainilla,
+  cítrico, océano, floral y té verde.
+- **Guardar favoritas**: cada vela tiene un corazón ♡ para marcarla, y hay
+  un botón para ver solo las que guardaste.
+- **Escribirnos** desde el formulario de contacto. Los mensajes le llegan a
+  quien administra la tienda.
+- **Preguntarle al asistente** (el botón 🌊 de la esquina). Te recomienda una
+  vela según cómo te quieras sentir (relajarte, dormir, concentrarte...) y
+  responde dudas sobre envíos, precios o ingredientes.
+- **Administrar la tienda** desde un panel privado con usuario y contraseña:
+  agregar, cambiar o quitar velas, y leer los mensajes recibidos.
+
+---
+
+## ¿Cómo está organizado el proyecto?
 
 ```
 nagomi-candles/
-├── index.html   → estructura de la página
-├── style.css    → estilos (paleta pastel, tipografía, animaciones)
-├── script.js    → catálogo de velas, filtros, carrito y presupuesto
-└── README.md    → este archivo
+├── index.html        → la página de inicio
+├── catalogo.html     → el catálogo de velas
+├── contacto.html     → el formulario de contacto
+├── admin/            → el panel privado (inicio de sesión y gestión)
+├── assets/           → los colores, estilos y la parte que hace funcionar la página
+└── backend/          → la parte "de atrás": el servidor y la información de la tienda
 ```
 
-No necesita build ni dependencias: es HTML/CSS/JS puro. El carrito y el
-presupuesto se guardan en `localStorage`, así que se mantienen aunque
-recargues la página.
+Separé la parte que se ve (lo que abre la persona en su navegador) de la
+parte de atrás (donde se guarda la información), para que cada cosa tenga
+su lugar y sea fácil encontrarla.
 
-## Cómo verlo en tu computadora
+---
 
-Simplemente abre `index.html` con doble clic, o usa un servidor local:
+## Cómo la publiqué
 
-```bash
-cd nagomi-candles
-python3 -m http.server 8000
-# luego abre http://localhost:8000
-```
+La subí a GitHub y la activé con GitHub Pages:
 
-## Subirlo a GitHub
+1. Creé un repositorio llamado `Nagomi-Candles`.
+2. Subí los archivos poco a poco, guardando cada avance con su propio mensaje.
+3. En **Settings → Pages** elegí la rama `main` y la carpeta raíz.
+4. En un par de minutos la página quedó disponible en internet.
 
-1. Crea un repositorio nuevo en GitHub (por ejemplo `nagomi-candles`), sin
-   README ni .gitignore (ya los tienes aquí o los puedes omitir).
-2. En tu computadora, dentro de la carpeta `nagomi-candles`, ejecuta:
+---
 
-   ```bash
-   git init
-   git add .
-   git commit -m "Primer commit: Nagomi Candles"
-   git branch -M main
-   git remote add origin https://github.com/TU-USUARIO/nagomi-candles.git
-   git push -u origin main
-   ```
+## Herramientas que usé
 
-   (Reemplaza `TU-USUARIO` por tu usuario de GitHub y `nagomi-candles` por el
-   nombre real de tu repositorio.)
+HTML, CSS y JavaScript para armar la página, React para el catálogo,
+y Node.js para la parte del servidor.
 
-3. Opcional — publícalo gratis con **GitHub Pages**:
-   - Ve a tu repo → `Settings` → `Pages`.
-   - En "Source" elige la rama `main` y la carpeta `/root`.
-   - Guarda: en un par de minutos tendrás una URL pública tipo
-     `https://TU-USUARIO.github.io/nagomi-candles/`.
+---
 
-## Abrirlo en Trae AI
+## Contacto
 
-1. Abre Trae AI y elige **"Open Folder"** (o "Clonar repositorio" si prefieres
-   traerlo directo desde GitHub, pegando la URL del repo que creaste arriba).
-2. Selecciona la carpeta `nagomi-candles`.
-3. Trae detectará `index.html`, `style.css` y `script.js` como un proyecto
-   web normal — puedes pedirle a su asistente que edite colores, textos,
-   agregue más velas al arreglo `CANDLES` en `script.js`, etc.
-4. Para verla en vivo mientras editas, usa la vista previa integrada de Trae
-   o un servidor local (ver arriba).
-
-## Personalizarla rápido
-
-- **Agregar una vela nueva:** copia un objeto dentro del arreglo `CANDLES` en
-  `script.js` y cambia `id`, `name`, `scent`, `scentLabel`, `desc`, `price`,
-  `wax` y `jar`.
-- **Cambiar los colores del sitio:** todos los colores están centralizados
-  como variables al inicio de `style.css`, dentro de `:root`.
-- **Cambiar el presupuesto por defecto:** el usuario lo escribe en el
-  carrito; no hay un valor fijo en el código.
+¿Dudas sobre un aroma o quieres hacer un pedido?
+Escríbenos a **ariannajibajaramirez@gmail.com** 🌊

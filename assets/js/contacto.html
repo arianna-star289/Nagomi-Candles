@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto · Nagomi Candles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" width="46" height="46" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#B9E7E4"/><stop offset="0.55" stop-color="#D8C6F2"/><stop offset="1" stop-color="#F7C6D9"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+        <path d="M2 80 Q 22 66, 42 80 T 82 80 T 122 80 V122 H2 Z" fill="#7FC4C8" opacity="0.65"/>
+        <path d="M2 92 Q 22 78, 42 92 T 82 92 T 122 92 V122 H2 Z" fill="#5AAEB3" opacity="0.75"/>
+        <path d="M60 40 C 55 48, 55 55, 60 60 C 65 55, 65 48, 60 40 Z" fill="#FFD897"/>
+        <path d="M60 46 C 57.5 50, 57.5 53.5, 60 56 C 62.5 53.5, 62.5 50, 60 46 Z" fill="#FFF3D6"/>
+        <path d="M92 30 l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity="0.95"/>
+      </svg>
+      <span class="logo-text">
+        <span class="logo-title">Nagomi<em>Candles</em></span>
+        <span class="logo-slogan">respira el mar, enciende la calma</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" data-page="index.html">Inicio</a>
+      <a href="catalogo.html" data-page="catalogo.html">Catálogo</a>
+      <a href="contacto.html" data-page="contacto.html">Contacto</a>
+      <a href="admin/login.html" class="nav-admin-link">Panel admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Hablemos</p>
+      <h1>Contáctanos</h1>
+      <p>¿Dudas sobre un aroma, un pedido especial o mayoreo? Escríbenos, respondemos con calma pero siempre respondemos.</p>
+    </div>
+  </section>
+
+  <section class="aromas">
+    <div class="wrap">
+      <div class="contact-info">
+        <p>También puedes escribirnos directamente a:</p>
+        <a class="contact-email" href="mailto:ariannajibajaramirez@gmail.com">✉️ ariannajibajaramirez@gmail.com</a>
+      </div>
+
+      <form class="form-card" id="contactForm" novalidate>
+        <div class="form-field" id="fieldName">
+          <label for="inputName">Tu nombre</label>
+          <input type="text" id="inputName" name="name" placeholder="¿Cómo te llamas?">
+          <p class="form-error">Cuéntanos tu nombre, por favor.</p>
+        </div>
+        <div class="form-field" id="fieldEmail">
+          <label for="inputEmail">Tu correo</label>
+          <input type="email" id="inputEmail" name="email" placeholder="tu@correo.com">
+          <p class="form-error">Escribe un correo válido para poder responderte.</p>
+        </div>
+        <div class="form-field" id="fieldMessage">
+          <label for="inputMessage">Mensaje</label>
+          <textarea id="inputMessage" name="message" placeholder="Cuéntanos qué necesitas..."></textarea>
+          <p class="form-error">Escribe tu mensaje, aunque sea cortito.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Enviar mensaje</button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="logo-title footer-logo">Nagomi<em>Candles</em></span>
+      <p class="footer-slogan">respira el mar, enciende la calma</p>
+    </div>
+    <div class="footer-contact">
+      <p><a href="mailto:ariannajibajaramirez@gmail.com">ariannajibajaramirez@gmail.com</a></p>
+      <p>@nagomicandles</p>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Nagomi Candles. Hecho con calma, en tandas pequeñas.</p>
+</footer>
+
+<button class="ai-toggle" id="aiToggle" aria-expanded="false" aria-controls="aiPanel" aria-label="Abrir asistente Nagomi">🌊</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="Asistente de Nagomi Candles">
+  <div class="ai-header"><strong>Asistente Nagomi</strong><span>Te ayudo a elegir tu aroma</span></div>
+  <div class="ai-body" id="aiBody"></div>
+  <div class="ai-quick" id="aiQuick"></div>
+  <form class="ai-input-row" id="aiForm">
+    <input type="text" id="aiInput" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/contacto.js"></script>
+<script src="assets/js/ai-assistant.js"></script>
+</body>
+</html>
