@@ -7,65 +7,65 @@
 <meta name="description" content="Nagomi Candles — velas aromáticas artesanales inspiradas en el anime y el océano. Encuentra tu calma.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-<!-- burbujas flotantes decorativas -->
-<div class="bubbles" aria-hidden="true">
-  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-</div>
+<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a href="#top" class="logo">
-      <svg class="logo-mark" width="44" height="44" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="48" fill="url(#logoSea)"/>
-        <path d="M4 62 Q 20 50, 36 62 T 68 62 T 100 62 V100 H4 Z" fill="#8FD3D6" opacity="0.55"/>
-        <path d="M4 72 Q 20 60, 36 72 T 68 72 T 100 72 V100 H4 Z" fill="#6BBFC4" opacity="0.6"/>
-        <path d="M50 30 C 40 42, 40 52, 50 58 C 60 52, 60 42, 50 30 Z" fill="#FFD897"/>
-        <path d="M50 38 C 46 45, 46 50, 50 53 C 54 50, 54 45, 50 38 Z" fill="#FFF3D6"/>
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" width="46" height="46" viewBox="0 0 120 120" aria-hidden="true">
         <defs>
-          <linearGradient id="logoSea" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#EAF7F6"/>
-            <stop offset="1" stop-color="#D9C9F1"/>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#B9E7E4"/>
+            <stop offset="0.55" stop-color="#D8C6F2"/>
+            <stop offset="1" stop-color="#F7C6D9"/>
           </linearGradient>
         </defs>
+        <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+        <circle cx="60" cy="60" r="58" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+        <path d="M2 80 Q 22 66, 42 80 T 82 80 T 122 80 V122 H2 Z" fill="#7FC4C8" opacity="0.65"/>
+        <path d="M2 92 Q 22 78, 42 92 T 82 92 T 122 92 V122 H2 Z" fill="#5AAEB3" opacity="0.75"/>
+        <path d="M62 24 C 46 40, 46 56, 62 66 C 50 54, 52 38, 66 26 C 65 25, 63.5 24.5, 62 24 Z" fill="#FFF6E3"/>
+        <path d="M60 40 C 55 48, 55 55, 60 60 C 65 55, 65 48, 60 40 Z" fill="#FFD897"/>
+        <path d="M60 46 C 57.5 50, 57.5 53.5, 60 56 C 62.5 53.5, 62.5 50, 60 46 Z" fill="#FFF3D6"/>
+        <path d="M92 30 l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity="0.95"/>
+        <circle cx="30" cy="34" r="2.6" fill="#fff" opacity="0.9"/>
+        <circle cx="86" cy="66" r="1.8" fill="#fff" opacity="0.8"/>
       </svg>
       <span class="logo-text">
         <span class="logo-title">Nagomi<em>Candles</em></span>
         <span class="logo-slogan">respira el mar, enciende la calma</span>
       </span>
     </a>
-
     <nav class="main-nav">
-      <a href="#aromas">Aromas</a>
-      <a href="#nagomi">Nuestra historia</a>
-      <a href="#contacto">Contacto</a>
+      <a href="index.html" data-page="index.html">Inicio</a>
+      <a href="catalogo.html" data-page="catalogo.html">Catálogo</a>
+      <a href="contacto.html" data-page="contacto.html">Contacto</a>
+      <a href="admin/login.html" class="nav-admin-link">Panel admin</a>
     </nav>
-
-    <button class="cart-toggle" id="cartToggle" aria-haspopup="dialog" aria-controls="cartDrawer" aria-label="Abrir carrito">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M3 4h2l1.6 9.6a2 2 0 0 0 2 1.6h7.4a2 2 0 0 0 2-1.6L20 7H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="9.5" cy="20" r="1.5" fill="currentColor"/>
-        <circle cx="17.5" cy="20" r="1.5" fill="currentColor"/>
-      </svg>
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
   </div>
 </header>
 
-<main id="top">
-
-  <!-- HERO -->
+<main>
   <section class="hero">
     <div class="wrap hero-inner">
+      <svg class="hero-logo" width="90" height="90" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+        <path d="M2 80 Q 22 66, 42 80 T 82 80 T 122 80 V122 H2 Z" fill="#7FC4C8" opacity="0.65"/>
+        <path d="M2 92 Q 22 78, 42 92 T 82 92 T 122 92 V122 H2 Z" fill="#5AAEB3" opacity="0.75"/>
+        <path d="M60 40 C 55 48, 55 55, 60 60 C 65 55, 65 48, 60 40 Z" fill="#FFD897"/>
+        <path d="M60 46 C 57.5 50, 57.5 53.5, 60 56 C 62.5 53.5, 62.5 50, 60 46 Z" fill="#FFF3D6"/>
+        <path d="M92 30 l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity="0.95"/>
+      </svg>
       <p class="eyebrow">Colección Nagomi 「和み」— armonía y calma</p>
       <h1>Velas que te transportan a un <span>opening tranquilo</span> junto al mar</h1>
       <p class="hero-sub">Cera de soja, mechas de madera y aromas inspirados en tus escenas de anime favoritas: tardes de lluvia, atardeceres en la playa y noches bajo la luna. Enciende una y respira.</p>
       <div class="hero-actions">
-        <a href="#aromas" class="btn btn-primary">Explorar aromas</a>
-        <a href="#nagomi" class="btn btn-ghost">¿Qué es Nagomi?</a>
+        <a href="catalogo.html" class="btn btn-primary">Explorar catálogo</a>
+        <a href="contacto.html" class="btn btn-ghost">Escríbenos</a>
       </div>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
@@ -73,7 +73,6 @@
     </svg>
   </section>
 
-  <!-- NAGOMI STORY -->
   <section class="nagomi" id="nagomi">
     <div class="wrap nagomi-inner">
       <div class="nagomi-text">
@@ -97,47 +96,13 @@
     </div>
   </section>
 
-  <!-- AROMAS -->
-  <section class="aromas" id="aromas">
-    <div class="wrap">
-      <div class="aromas-heading">
-        <p class="eyebrow">La colección</p>
-        <h2>Elige tu aroma</h2>
-        <p class="aromas-sub">Filtra por familia olfativa y arma tu propia escena de calma.</p>
-      </div>
-
-      <div class="filters" id="filters" role="tablist" aria-label="Filtrar velas por aroma">
-        <button class="filter-btn is-active" data-filter="todos">Todos</button>
-        <button class="filter-btn" data-filter="lavanda">Lavanda</button>
-        <button class="filter-btn" data-filter="vainilla">Vainilla</button>
-        <button class="filter-btn" data-filter="citrico">Cítrico</button>
-        <button class="filter-btn" data-filter="oceano">Océano</button>
-        <button class="filter-btn" data-filter="floral">Floral</button>
-        <button class="filter-btn" data-filter="matcha">Té verde</button>
-      </div>
-
-      <div class="candle-grid" id="candleGrid"></div>
-    </div>
-  </section>
-
-  <!-- BUDGET STRIP -->
   <section class="promise">
     <div class="wrap promise-inner">
-      <div class="promise-item">
-        <span class="promise-icon">🕯️</span>
-        <p>Cera de soja natural, combustión limpia</p>
-      </div>
-      <div class="promise-item">
-        <span class="promise-icon">🌊</span>
-        <p>Aromas inspirados en escenas de anime y mar</p>
-      </div>
-      <div class="promise-item">
-        <span class="promise-icon">📦</span>
-        <p>Empaque reciclable, hecho para regalar</p>
-      </div>
+      <div class="promise-item"><span class="promise-icon">🕯️</span><p>Cera de soja natural, combustión limpia</p></div>
+      <div class="promise-item"><span class="promise-icon">🌊</span><p>Aromas inspirados en escenas de anime y mar</p></div>
+      <div class="promise-item"><span class="promise-icon">💬</span><p>Asistente con IA que te ayuda a elegir tu aroma</p></div>
     </div>
   </section>
-
 </main>
 
 <footer class="site-footer" id="contacto">
@@ -147,48 +112,28 @@
       <p class="footer-slogan">respira el mar, enciende la calma</p>
     </div>
     <div class="footer-contact">
-      <p>hola@nagomicandles.com</p>
+      <p><a href="mailto:ariannajibajaramirez@gmail.com">ariannajibajaramirez@gmail.com</a></p>
       <p>@nagomicandles</p>
     </div>
   </div>
   <p class="footer-copy">© 2026 Nagomi Candles. Hecho con calma, en tandas pequeñas.</p>
 </footer>
 
-<!-- CART DRAWER -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
-  <div class="cart-header">
-    <h2 id="cartTitle">Tu carrito</h2>
-    <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">✕</button>
-  </div>
+<!-- Asistente de IA -->
+<button class="ai-toggle" id="aiToggle" aria-expanded="false" aria-controls="aiPanel" aria-label="Abrir asistente Nagomi">🌊</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="Asistente de Nagomi Candles">
+  <div class="ai-header"><strong>Asistente Nagomi</strong><span>Te ayudo a elegir tu aroma</span></div>
+  <div class="ai-body" id="aiBody"></div>
+  <div class="ai-quick" id="aiQuick"></div>
+  <form class="ai-input-row" id="aiForm">
+    <input type="text" id="aiInput" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+</div>
 
-  <div class="budget-box">
-    <label for="budgetInput">Tu presupuesto</label>
-    <div class="budget-input-row">
-      <span>$</span>
-      <input type="number" id="budgetInput" min="0" step="1" placeholder="Ej. 60">
-    </div>
-    <div class="tide-track" aria-hidden="true">
-      <div class="tide-fill" id="tideFill"></div>
-    </div>
-    <p class="budget-status" id="budgetStatus">Ingresa un presupuesto para ver cuánto te queda.</p>
-  </div>
-
-  <div class="cart-items" id="cartItems">
-    <p class="cart-empty" id="cartEmpty">Tu carrito está tan tranquilo como el mar en calma. Aún no hay velas aquí 🌊</p>
-  </div>
-
-  <div class="cart-summary">
-    <div class="cart-total-row">
-      <span>Total</span>
-      <span id="cartTotal">$0</span>
-    </div>
-    <button class="btn btn-primary btn-checkout" id="checkoutBtn">Finalizar compra</button>
-  </div>
-</aside>
-
-<div class="toast" id="toast"></div>
-
-<script src="script.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ai-assistant.js"></script>
 </body>
 </html>
