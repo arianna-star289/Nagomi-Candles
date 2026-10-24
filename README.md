@@ -49,6 +49,49 @@ su lugar y sea fácil encontrarla.
 
 ---
 
+## Cómo verla en tu computadora
+
+Lo más fácil: descarga el proyecto, descomprímelo y abre el archivo
+`index.html` con doble clic. Se abre en tu navegador y listo.
+
+Si no tienes el servidor encendido, la página funciona igual en
+**modo demostración**: guarda la información dentro de tu mismo navegador.
+Verás un avisito que lo dice. Así la página nunca se queda vacía ni rota.
+
+### Entrar al panel privado
+
+Entra por el botón **Panel admin** del menú.
+
+- Usuario: `admin`
+- Contraseña: `nagomi2026`
+
+(Si algún día la publicas de verdad, cambia esa contraseña.)
+
+---
+
+## Si quieres encender el servidor (opcional)
+
+Necesitas tener [Node.js](https://nodejs.org) instalado. Luego, desde la
+carpeta del proyecto:
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm start
+```
+
+Con eso el servidor queda encendido en tu computadora y la página lo usa
+sola. Los mensajes y los cambios del catálogo se guardan de verdad, aunque
+cierres el navegador.
+
+Para dejarlo encendido en internet, se puede subir la carpeta `backend` a
+un servicio gratuito como [Render](https://render.com). Después hay que
+cambiar una sola línea en el archivo `assets/js/config.js` y poner la
+dirección que Render te dé.
+
+---
+
 ## Cómo la publiqué
 
 La subí a GitHub y la activé con GitHub Pages:
