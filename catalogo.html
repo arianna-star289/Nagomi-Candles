@@ -173,6 +173,55 @@ function FilterBar({ active, onChange }) {
   );
 }
 
+/**
+ * Botones para pedir una vela. Arman el mensaje del pedido (nombre de la
+ * vela y precio) y lo abren en WhatsApp o en Gmail, listo para enviar.
+ * - WhatsApp: solo aparece si hay WHATSAPP_NUMBER en config.js; si no,
+ *   se muestra "Consultar", que lleva al formulario de contacto.
+ * - Gmail: abre la pantalla de "Redactar" de Gmail con el correo de la
+ *   tienda (CONTACT_EMAIL), el asunto y el mensaje ya escritos.
+ */
+function OrderButtons({ candle }) {
+  const cfg = window.NAGOMI_CONFIG || {};
+  const waNumber = (cfg.WHATSAPP_NUMBER || "").replace(/\D/g, "");
+  const storeEmail = cfg.CONTACT_EMAIL || "";
+
+  // Si el cliente inició sesión, firmamos el pedido con su nombre.
+  const customer = typeof NagomiCustomer !== "undefined" ? NagomiCustomer.get() : null;
+  const greeting = customer ? `Hola, soy ${customer.name}. ` : "Hola, ";
+  const orderText = `${greeting}quiero pedir la vela ${candle.name} por $${candle.price}. ¿Me pueden confirmar disponibilidad?`;
+
+  const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
+    "&to=" + encodeURIComponent(storeEmail) +
+    "&su=" + encodeURIComponent("Pedido: " + candle.name + " - Nagomi Candles") +
+    "&body=" + encodeURIComponent(orderText);
+
+  const btnStyle = { flex: "1 1 120px", textAlign: "center" };
+
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", width: "100%" }}>
+      {waNumber ? (
+        <a className="btn btn-primary btn-sm" style={btnStyle}
+          href={"https://wa.me/" + waNumber + "?text=" + encodeURIComponent(orderText)}
+          target="_blank" rel="noopener noreferrer">
+          Pedir por WhatsApp
+        </a>
+      ) : (
+        <a className="btn btn-primary btn-sm" style={btnStyle}
+          href={"contacto.html?vela=" + encodeURIComponent(candle.name)}>
+          Consultar
+        </a>
+      )}
+      {storeEmail && (
+        <a className="btn btn-ghost btn-sm" style={btnStyle}
+          href={gmailUrl} target="_blank" rel="noopener noreferrer">
+          Pedir por Gmail
+        </a>
+      )}
+    </div>
+  );
+}
+
 function CandleCard({ candle, isFavorite, onToggleFavorite }) {
   const lowStock = candle.stock !== undefined && candle.stock <= 5;
   return (
@@ -206,16 +255,9 @@ function CandleCard({ candle, isFavorite, onToggleFavorite }) {
           {lowStock ? "Últimas " + candle.stock + " unidades" : candle.stock + " disponibles"}
         </p>
       )}
-      <div className="candle-footer">
+      <div className="candle-footer" style={{ flexWrap: "wrap", gap: "10px" }}>
         <span className="candle-price">${candle.price}</span>
-        <a className="btn btn-primary btn-sm"
-          href={(window.NAGOMI_CONFIG && window.NAGOMI_CONFIG.WHATSAPP_NUMBER)
-            ? "https://wa.me/" + window.NAGOMI_CONFIG.WHATSAPP_NUMBER.replace(/\D/g, "") + "?text=" + encodeURIComponent("Hola, quiero pedir " + candle.name + " por $" + candle.price + ". ¿Me pueden confirmar disponibilidad?")
-            : "contacto.html?vela=" + encodeURIComponent(candle.name)}
-          target={(window.NAGOMI_CONFIG && window.NAGOMI_CONFIG.WHATSAPP_NUMBER) ? "_blank" : undefined}
-          rel="noopener noreferrer">
-          {(window.NAGOMI_CONFIG && window.NAGOMI_CONFIG.WHATSAPP_NUMBER) ? "Pedir por WhatsApp" : "Consultar"}
-        </a>
+        <OrderButtons candle={candle} />
       </div>
     </article>
   );
