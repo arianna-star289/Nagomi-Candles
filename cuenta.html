@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi cuenta · Nagomi Candles</title>
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+.account-wrap{max-width:520px;margin:55px auto;padding:0 18px}.account-card{background:#fff;border:1px solid #eee2f4;border-radius:24px;padding:28px;box-shadow:0 12px 35px #44305a12}
+.account-tabs{display:flex;gap:8px;margin:20px 0}.account-tabs button{flex:1;padding:11px;border:1px solid #ded2e8;border-radius:12px;background:#faf7fc;cursor:pointer;font-weight:700}.account-tabs button.active{background:#d8c6f2;border-color:#bba6df}
+.account-card input{width:100%;padding:12px;border:1px solid #d9cde3;border-radius:10px;margin:6px 0 14px}.account-card label{font-weight:700}.account-note{font-size:.88rem;color:#6f6479}.account-status{min-height:24px;margin-top:12px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap header-inner"><a href="index.html" class="logo"><span class="logo-title">Nagomi<em>Candles</em></span></a><nav class="main-nav"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a href="contacto.html">Contacto</a></nav></div></header>
+<main class="account-wrap"><div class="account-card">
+<p class="eyebrow">Tu espacio Nagomi</p><h1>Bienvenido/a</h1><p class="account-note">Crea una cuenta para futuras compras o inicia sesión si ya tienes una.</p>
+<div class="account-tabs"><button type="button" class="active" data-mode="login">Iniciar sesión</button><button type="button" data-mode="register">Crear cuenta</button></div>
+<form id="accountForm">
+<div id="nameField" hidden><label for="customerName">Nombre</label><input id="customerName" autocomplete="name" minlength="2"></div>
+<label for="customerEmail">Correo electrónico</label><input id="customerEmail" type="email" required autocomplete="email">
+<label for="customerPassword">Contraseña</label><input id="customerPassword" type="password" required minlength="8" autocomplete="current-password">
+<p class="account-note" id="passwordHelp">Usa tu correo y contraseña para acceder a tu cuenta.</p>
+<button class="btn btn-primary btn-block" id="accountSubmit" type="submit">Iniciar sesión</button><p class="account-status" id="accountStatus" role="status"></p>
+</form></div></main>
+<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+<script>
+(() => {
+ const form=document.getElementById('accountForm'), nameField=document.getElementById('nameField'), name=document.getElementById('customerName'), email=document.getElementById('customerEmail'), password=document.getElementById('customerPassword'), submit=document.getElementById('accountSubmit'), status=document.getElementById('accountStatus');
+ let mode='login';
+ document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===btn));nameField.hidden=mode!=='register';name.required=mode==='register';submit.textContent=mode==='register'?'Crear cuenta':'Iniciar sesión';password.autocomplete=mode==='register'?'new-password':'current-password';status.textContent='';}));
+ form.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Procesando…';submit.disabled=true;try{const result=mode==='register'?await NagomiAPI.registerCustomer({name:name.value,email:email.value,password:password.value}):await NagomiAPI.loginCustomer(email.value,password.value);localStorage.setItem('nagomi_customer_session',JSON.stringify(result));status.textContent='¡Listo! Tu cuenta está activa. Ya puedes continuar con tu compra.';status.style.color='#287a55';}catch(err){status.textContent=err.message;status.style.color='#a33';}finally{submit.disabled=false;}});
+})();
+</script></body></html>
