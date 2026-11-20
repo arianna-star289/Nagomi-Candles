@@ -331,14 +331,14 @@ function App() {
     <div>
       <FilterBar active={filter} onChange={setFilter} />
 
-      <div className="fav-toolbar">
+      <div className="fav-toolbar" style={{ flexWrap: "wrap" }}>
         <button
           className={"filter-btn" + (onlyFavorites ? " is-active" : "")}
           onClick={() => setOnlyFavorites(!onlyFavorites)}
         >
           ♥ Mis favoritas ({favorites.length})
         </button>
-        <p className="account-note" style={{ margin: "8px 0 0", fontSize: ".85rem" }}>
+        <p className="account-note" style={{ margin: "8px 0 0", fontSize: ".85rem", flexBasis: "100%", width: "100%", textAlign: "center" }}>
           {token
             ? "♡ Tus favoritas se guardan en tu cuenta."
             : <span><a href="cuenta.html">Inicia sesión</a> para guardar tus favoritas en tu cuenta y verlas desde cualquier dispositivo.</span>}

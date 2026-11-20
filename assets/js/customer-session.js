@@ -44,7 +44,13 @@ const NagomiCustomer = (function () {
   }
 
   function logout(reload = true) {
-    try { localStorage.removeItem(KEY); } catch (e) { /* nada */ }
+    try {
+      localStorage.removeItem(KEY);
+      // Las favoritas ya están guardadas en la cuenta: las quitamos de este
+      // navegador para que otra persona que use el equipo no las vea.
+      // Al volver a iniciar sesión, se cargan otra vez desde la cuenta.
+      localStorage.removeItem("nagomi_favorites");
+    } catch (e) { /* nada */ }
     if (reload) window.location.reload();
   }
 
