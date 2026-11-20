@@ -43,6 +43,57 @@
     });
   }
 
+  // ---------- Botón de Gmail y enlace de correo ----------
+  // Abren el correo del cliente con el destinatario, el asunto y el
+  // mensaje ya escritos; el cliente solo presiona "Enviar" y el correo
+  // llega a la bandeja de la tienda (CONTACT_EMAIL en config.js).
+  const storeEmail = (window.NAGOMI_CONFIG && window.NAGOMI_CONFIG.CONTACT_EMAIL) || "";
+  const gmailBtn = document.getElementById("gmailBtn");
+  const mailtoLink = document.getElementById("mailtoLink");
+
+  function buildEmail() {
+    const name = nameInput.value.trim();
+    const text = messageInput.value.trim();
+    const subject = name ? `Consulta de ${name} - Nagomi Candles` : "Consulta - Nagomi Candles";
+    const body = (name ? `Hola, soy ${name}.\n\n` : "Hola,\n\n") + text;
+    return { subject, body, text };
+  }
+
+  // Si falta el mensaje, avisamos en vez de abrir un correo vacío.
+  function requireMessage(e) {
+    if (messageInput.value.trim()) return true;
+    e.preventDefault();
+    setFieldError("fieldMessage", true);
+    status.textContent = "Escribe tu mensaje antes de enviarlo por correo.";
+    status.className = "form-status is-error";
+    return false;
+  }
+
+  if (!storeEmail) {
+    if (gmailBtn) gmailBtn.style.display = "none";
+    if (mailtoLink) mailtoLink.parentElement.style.display = "none";
+  }
+
+  if (gmailBtn && storeEmail) {
+    gmailBtn.addEventListener("click", (e) => {
+      if (!requireMessage(e)) return;
+      const { subject, body } = buildEmail();
+      // Enlace oficial de Gmail para "redactar" un correo nuevo.
+      gmailBtn.href = "https://mail.google.com/mail/?view=cm&fs=1" +
+        `&to=${encodeURIComponent(storeEmail)}` +
+        `&su=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
+    });
+  }
+
+  if (mailtoLink && storeEmail) {
+    mailtoLink.addEventListener("click", (e) => {
+      if (!requireMessage(e)) return;
+      const { subject, body } = buildEmail();
+      mailtoLink.href = `mailto:${storeEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+
   function setFieldError(fieldId, hasError) {
     document.getElementById(fieldId).classList.toggle("has-error", hasError);
   }

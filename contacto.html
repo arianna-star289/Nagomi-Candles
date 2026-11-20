@@ -80,8 +80,11 @@
         <div style="display:flex; flex-wrap:wrap; gap:10px;">
           <!-- Solo se muestra si hay WHATSAPP_NUMBER en config.js (ver contacto.js) -->
           <a class="btn btn-ghost" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none; flex:1 1 200px; text-align:center;">💬 Enviar por WhatsApp</a>
+          <!-- Abre Gmail en el navegador con el mensaje listo (ver contacto.js) -->
+          <a class="btn btn-ghost" id="gmailBtn" href="#" target="_blank" rel="noopener noreferrer" style="flex:1 1 200px; text-align:center;">✉️ Enviar por Gmail</a>
           <button type="submit" class="btn btn-primary" id="submitBtn" style="flex:1 1 200px;">Enviar mensaje</button>
         </div>
+        <p class="account-note" style="text-align:center; margin-top:10px;">¿Usas otro correo (Outlook, Hotmail, Yahoo)? <a href="#" id="mailtoLink">Ábrelo en tu app de correo</a>.</p>
         <p class="form-status" id="formStatus"></p>
       </form>
 
