@@ -11,7 +11,7 @@
  * -----------------------------------------------------------------------
  */
 window.NAGOMI_CONFIG = {
-  API_BASE_URL: "http://localhost:4000/api",
+  API_BASE_URL: "https://nagomi-candles-api.onrender.com/api",
   CONTACT_EMAIL: "ariannajibajaramirez@gmail.com",
   // Escribe el número de WhatsApp del negocio en formato internacional, solo dígitos.
   WHATSAPP_NUMBER: ""

@@ -56,7 +56,12 @@ const NagomiAPI = (function () {
     backendChecked = true;
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 1800);
+      // El plan gratis de Render "duerme" el servidor tras 15 min sin uso y
+      // tarda hasta ~50 s en despertar. Por eso, si el backend está en
+      // internet, esperamos hasta 60 s (mientras se muestra "Cargando…")
+      // antes de pasar a modo demo. En local basta con 1,8 s.
+      const isLocal = /localhost|127\.0\.0\.1/.test(BASE);
+      const timeout = setTimeout(() => controller.abort(), isLocal ? 1800 : 60000);
       const res = await fetch(`${BASE}/health`, { signal: controller.signal });
       clearTimeout(timeout);
       backendAvailable = res.ok;
