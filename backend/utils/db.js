@@ -80,6 +80,10 @@ async function saveToMongo() {
   }
 }
 
+// En modo archivo, creamos la carpeta data/ si no existe (por ejemplo,
+// en un clon nuevo del repositorio, donde db.json no se sube a GitHub).
+if (!MONGODB_URI) fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+
 const db = MONGODB_URI ? low(new MongoMirrorAdapter()) : low(new FileSync(DATA_FILE));
 
 // ---------------------------------------------------------------------

@@ -40,7 +40,7 @@ const NagomiCustomer = (function () {
       logout(false);
       return null;
     }
-    return { name, email };
+    return { name, email, token: raw.token || "" };
   }
 
   function logout(reload = true) {
@@ -85,7 +85,8 @@ const NagomiCustomer = (function () {
     panel.innerHTML = `
       <p class="account-note" style="margin-top:6px">Sesión iniciada como</p>
       <p style="font-size:1.25rem;font-weight:800;margin:4px 0" data-name></p>
-      <p class="account-note" data-email style="margin-bottom:20px"></p>
+      <p class="account-note" data-email style="margin-bottom:8px"></p>
+      <p class="account-note" style="margin-bottom:20px">♡ Tus velas favoritas se guardan en tu cuenta: las verás desde cualquier celular o computadora.</p>
       <div style="display:flex;flex-wrap:wrap;gap:10px">
         <a class="btn btn-primary" href="catalogo.html" style="flex:1 1 180px;text-align:center">Ver el catálogo</a>
         <button type="button" class="btn btn-ghost" data-logout style="flex:1 1 180px">Cerrar sesión</button>

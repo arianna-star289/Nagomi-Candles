@@ -271,6 +271,11 @@ function App() {
   const [favorites, setFavorites] = useState(loadFavorites);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
 
+  // Si el cliente inició sesión, sus favoritas también se guardan en su cuenta.
+  const customer = typeof NagomiCustomer !== "undefined" ? NagomiCustomer.get() : null;
+  const token = customer && customer.token;
+  const [cloudReady, setCloudReady] = useState(false); // ya trajimos las de la cuenta
+
   // Cada vez que cambia el filtro, pedimos las velas otra vez.
   useEffect(() => {
     let cancelled = false; // evita pintar datos viejos si el usuario cambia rápido de filtro
@@ -289,12 +294,32 @@ function App() {
     return () => { cancelled = true; };
   }, [filter]);
 
-  // Cada vez que cambian las favoritas, las guardamos en el navegador.
+  // Al abrir el catálogo con sesión iniciada: traemos las favoritas de la
+  // cuenta y las juntamos con las de este navegador (sin repetir).
+  useEffect(() => {
+    if (!token) return;
+    NagomiAPI.getFavorites(token)
+      .then((res) => {
+        setFavorites((local) => Array.from(new Set([...(res.ids || []), ...local])));
+      })
+      .catch(() => { /* sin servidor o sesión vencida: seguimos solo en local */ })
+      .finally(() => setCloudReady(true));
+  }, [token]);
+
+  // Cada vez que cambian las favoritas, las guardamos en el navegador y,
+  // si hay sesión, también en la cuenta (esperamos 0,6 s para no enviar
+  // una petición por cada clic seguido).
   useEffect(() => {
     try {
       localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
     } catch (e) { /* si no se puede guardar, la app sigue funcionando */ }
-  }, [favorites]);
+
+    if (!token || !cloudReady) return;
+    const timer = setTimeout(() => {
+      NagomiAPI.saveFavorites(favorites, token).catch(() => {});
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [favorites, token, cloudReady]);
 
   function toggleFavorite(id) {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -313,6 +338,11 @@ function App() {
         >
           ♥ Mis favoritas ({favorites.length})
         </button>
+        <p className="account-note" style={{ margin: "8px 0 0", fontSize: ".85rem" }}>
+          {token
+            ? "♡ Tus favoritas se guardan en tu cuenta."
+            : <span><a href="cuenta.html">Inicia sesión</a> para guardar tus favoritas en tu cuenta y verlas desde cualquier dispositivo.</span>}
+        </p>
       </div>
 
       {status === "loading" && <StateBox loading>Cargando el catálogo…</StateBox>}

@@ -8,6 +8,7 @@
  *   /api/auth      -> login del panel admin y de clientes
  *   /api/ai        -> IA personalizada (recomendador + chatbot)
  *   /api/reviews   -> opiniones de clientes (moderadas por el admin)
+ *   /api/favorites -> favoritas guardadas en la cuenta del cliente
  * -----------------------------------------------------------------------
  */
 require("dotenv").config();
@@ -20,6 +21,7 @@ const contactRouter = require("./routes/contact");
 const authRouter = require("./routes/auth");
 const aiRouter = require("./routes/ai");
 const reviewsRouter = require("./routes/reviews");
+const favoritesRouter = require("./routes/favorites");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -63,6 +65,7 @@ app.use("/api/contact", contactRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/ai", aiRouter);
 app.use("/api/reviews", reviewsRouter);
+app.use("/api/favorites", favoritesRouter);
 
 // Ruta no encontrada: respondemos en JSON (el frontend siempre espera JSON).
 app.use("/api", (req, res) => {

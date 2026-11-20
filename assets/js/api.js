@@ -197,6 +197,19 @@ const NagomiAPI = (function () {
     return request(`/reviews/${id}/approve`, { method: "PATCH", body: JSON.stringify({ approved }), headers: { Authorization: `Bearer ${token}` } });
   }
 
+  // ---------- favoritas del cliente (requieren cuenta) ----------
+  async function getFavorites(token) {
+    await checkBackend();
+    if (!backendAvailable) throw new Error("Las favoritas en la cuenta requieren el servidor.");
+    return request("/favorites", { headers: { Authorization: `Bearer ${token}` } });
+  }
+
+  async function saveFavorites(ids, token) {
+    await checkBackend();
+    if (!backendAvailable) throw new Error("Las favoritas en la cuenta requieren el servidor.");
+    return request("/favorites", { method: "PUT", body: JSON.stringify({ ids }), headers: { Authorization: `Bearer ${token}` } });
+  }
+
   // ---------- autenticación admin ----------
   async function login(username, password) {
     await checkBackend();
@@ -272,6 +285,6 @@ const NagomiAPI = (function () {
     checkBackend, isDemoMode,
     getProducts, createProduct, updateProduct, deleteProduct,
     sendMessage, getMessages, markMessageRead,
-    login, registerCustomer, loginCustomer, sendReview, getReviews, approveReview, aiRecommend, aiAsk
+    login, registerCustomer, loginCustomer, getFavorites, saveFavorites, sendReview, getReviews, approveReview, aiRecommend, aiAsk
   };
 })();
