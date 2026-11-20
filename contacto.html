@@ -75,9 +75,13 @@
           <textarea id="inputMessage" name="message" placeholder="Cuéntanos qué necesitas..."></textarea>
           <p class="form-error">Escribe tu mensaje, aunque sea cortito.</p>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Enviar mensaje</button>
-        <!-- Solo se muestra si hay WHATSAPP_NUMBER en config.js (ver contacto.js) -->
-        <a class="btn btn-ghost btn-block" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none; margin-top:10px; text-align:center;">💬 Enviar por WhatsApp</a>
+        <!-- Botones en fila: WhatsApp a la izquierda, Enviar a la derecha.
+             En celulares (pantalla angosta) se apilan uno debajo del otro. -->
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+          <!-- Solo se muestra si hay WHATSAPP_NUMBER en config.js (ver contacto.js) -->
+          <a class="btn btn-ghost" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none; flex:1 1 200px; text-align:center;">💬 Enviar por WhatsApp</a>
+          <button type="submit" class="btn btn-primary" id="submitBtn" style="flex:1 1 200px;">Enviar mensaje</button>
+        </div>
         <p class="form-status" id="formStatus"></p>
       </form>
 
