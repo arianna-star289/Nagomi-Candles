@@ -350,7 +350,11 @@ function App() {
           ♥ Mis favoritas ({favorites.length})
         </button>
         <p className="account-note" style={{ margin: "8px 0 0", fontSize: ".85rem", flexBasis: "100%", width: "100%", textAlign: "center" }}>
-          {token
+          {token && !cloudReady && !cloudFailed
+            ? "⏳ Cargando tus favoritas desde tu cuenta… (si el servidor estaba dormido, puede tardar hasta un minuto)"
+            : token && cloudFailed
+            ? "No pudimos conectar con tu cuenta; por ahora tus favoritas se guardan en este navegador."
+            : token
             ? "♡ Tus favoritas se guardan en tu cuenta."
             : <span><a href="cuenta.html">Inicia sesión</a> para guardar tus favoritas en tu cuenta y verlas desde cualquier dispositivo.</span>}
         </p>
