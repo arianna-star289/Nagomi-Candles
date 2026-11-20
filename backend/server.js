@@ -13,6 +13,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const db = require("./utils/db");
 
 const productsRouter = require("./routes/products");
 const contactRouter = require("./routes/contact");
@@ -81,7 +82,16 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Algo salió mal en el servidor." });
 });
 
-app.listen(PORT, () => {
-  console.log(`Nagomi Candles backend corriendo en http://localhost:${PORT}`);
-  console.log("Orígenes permitidos (CORS):", allowedOrigins.join(", ") || "ninguno");
-});
+// Primero conectamos la base de datos y DESPUÉS empezamos a recibir
+// peticiones; así ninguna ruta lee datos que todavía no se cargaron.
+db.init()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Nagomi Candles backend corriendo en http://localhost:${PORT}`);
+      console.log("Orígenes permitidos (CORS):", allowedOrigins.join(", ") || "ninguno");
+    });
+  })
+  .catch((err) => {
+    console.error("No se pudo iniciar la base de datos:", err.message);
+    process.exit(1);
+  });
