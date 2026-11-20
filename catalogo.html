@@ -275,6 +275,7 @@ function App() {
   const customer = typeof NagomiCustomer !== "undefined" ? NagomiCustomer.get() : null;
   const token = customer && customer.token;
   const [cloudReady, setCloudReady] = useState(false); // ya trajimos las de la cuenta
+  const [cloudFailed, setCloudFailed] = useState(false); // el servidor no respondió
 
   // Cada vez que cambia el filtro, pedimos las velas otra vez.
   useEffect(() => {
@@ -294,32 +295,42 @@ function App() {
     return () => { cancelled = true; };
   }, [filter]);
 
-  // Al abrir el catálogo con sesión iniciada: traemos las favoritas de la
-  // cuenta y las juntamos con las de este navegador (sin repetir).
+  // Favoritas: dos lugares distintos para que no se mezclen.
+  //  - Visitante (sin sesión): se guardan en este navegador (FAV_KEY).
+  //  - Con sesión: se guardan SOLO en la cuenta (servidor). Al iniciar
+  //    sesión, las del visitante se pasan a la cuenta y se borran del
+  //    navegador. Así, al cerrar sesión, aquí no queda nada de la cuenta.
   useEffect(() => {
     if (!token) return;
+    const guestFavs = loadFavorites();
     NagomiAPI.getFavorites(token)
       .then((res) => {
-        setFavorites((local) => Array.from(new Set([...(res.ids || []), ...local])));
+        const merged = Array.from(new Set([...(res.ids || []), ...guestFavs]));
+        setFavorites(merged);
+        try { localStorage.removeItem(FAV_KEY); } catch (e) { /* nada */ }
+        setCloudReady(true);
       })
-      .catch(() => { /* sin servidor o sesión vencida: seguimos solo en local */ })
-      .finally(() => setCloudReady(true));
+      .catch(() => {
+        // Sin servidor o sesión vencida: seguimos como visitante.
+        setCloudFailed(true);
+      });
   }, [token]);
 
-  // Cada vez que cambian las favoritas, las guardamos en el navegador y,
-  // si hay sesión, también en la cuenta (esperamos 0,6 s para no enviar
-  // una petición por cada clic seguido).
+  // Guardar cada cambio en el lugar que corresponde.
   useEffect(() => {
-    try {
-      localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
-    } catch (e) { /* si no se puede guardar, la app sigue funcionando */ }
-
-    if (!token || !cloudReady) return;
-    const timer = setTimeout(() => {
-      NagomiAPI.saveFavorites(favorites, token).catch(() => {});
-    }, 600);
-    return () => clearTimeout(timer);
-  }, [favorites, token, cloudReady]);
+    if (token && cloudReady) {
+      // Esperamos 0,6 s para no enviar una petición por cada clic seguido.
+      const timer = setTimeout(() => {
+        NagomiAPI.saveFavorites(favorites, token).catch(() => {});
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+    if (!token || cloudFailed) {
+      try {
+        localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
+      } catch (e) { /* si no se puede guardar, la app sigue funcionando */ }
+    }
+  }, [favorites, token, cloudReady, cloudFailed]);
 
   function toggleFavorite(id) {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
