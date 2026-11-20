@@ -21,6 +21,28 @@
     messageInput.value = `Hola, me interesa la vela "${candleName}". Quisiera saber más antes de comprarla.`;
   }
 
+  // ---------- Botón de WhatsApp ----------
+  // Si la tienda configuró su número en config.js, mostramos un botón que
+  // abre WhatsApp con el nombre y el mensaje que la persona escribió.
+  const whatsappBtn = document.getElementById("whatsappBtn");
+  const waNumber = ((window.NAGOMI_CONFIG && window.NAGOMI_CONFIG.WHATSAPP_NUMBER) || "").replace(/\D/g, "");
+  if (whatsappBtn && waNumber) {
+    whatsappBtn.style.display = "block";
+    whatsappBtn.addEventListener("click", (e) => {
+      const name = nameInput.value.trim();
+      const text = messageInput.value.trim();
+      if (!text) {
+        e.preventDefault();
+        setFieldError("fieldMessage", true);
+        status.textContent = "Escribe tu mensaje antes de enviarlo por WhatsApp.";
+        status.className = "form-status is-error";
+        return;
+      }
+      const full = (name ? `Hola, soy ${name}. ` : "") + text;
+      whatsappBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(full)}`;
+    });
+  }
+
   function setFieldError(fieldId, hasError) {
     document.getElementById(fieldId).classList.toggle("has-error", hasError);
   }

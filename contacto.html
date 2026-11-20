@@ -76,6 +76,8 @@
           <p class="form-error">Escribe tu mensaje, aunque sea cortito.</p>
         </div>
         <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Enviar mensaje</button>
+        <!-- Solo se muestra si hay WHATSAPP_NUMBER en config.js (ver contacto.js) -->
+        <a class="btn btn-ghost btn-block" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer" style="display:none; margin-top:10px; text-align:center;">💬 Enviar por WhatsApp</a>
         <p class="form-status" id="formStatus"></p>
       </form>
 
