@@ -99,13 +99,14 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/api.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/customer-session.js"></script>
 <!-- Registro e inicio de sesión de clientes -->
 <script>
 (() => {
  const form=document.getElementById('accountForm'), nameField=document.getElementById('nameField'), name=document.getElementById('customerName'), email=document.getElementById('customerEmail'), password=document.getElementById('customerPassword'), submit=document.getElementById('accountSubmit'), status=document.getElementById('accountStatus');
  let mode='login';
  document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===btn));nameField.hidden=mode!=='register';name.required=mode==='register';submit.textContent=mode==='register'?'Crear cuenta':'Iniciar sesión';password.autocomplete=mode==='register'?'new-password':'current-password';status.textContent='';}));
- form.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Procesando…';submit.disabled=true;try{const result=mode==='register'?await NagomiAPI.registerCustomer({name:name.value,email:email.value,password:password.value}):await NagomiAPI.loginCustomer(email.value,password.value);localStorage.setItem('nagomi_customer_session',JSON.stringify(result));status.textContent='¡Listo! Tu cuenta está activa. Ya puedes continuar con tu compra.';status.style.color='#287a55';}catch(err){status.textContent=err.message;status.style.color='#a33';}finally{submit.disabled=false;}});
+ form.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Procesando…';submit.disabled=true;try{const result=mode==='register'?await NagomiAPI.registerCustomer({name:name.value,email:email.value,password:password.value}):await NagomiAPI.loginCustomer(email.value,password.value);localStorage.setItem('nagomi_customer_session',JSON.stringify(result));status.textContent='¡Listo! Tu cuenta está activa. Ya puedes continuar con tu compra.';status.style.color='#287a55';if(window.NagomiCustomer)setTimeout(()=>{status.textContent='';NagomiCustomer.render();},900);}catch(err){status.textContent=err.message;status.style.color='#a33';}finally{submit.disabled=false;}});
 })();
 </script>
 <script src="assets/js/ai-assistant.js"></script>
