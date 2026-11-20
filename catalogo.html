@@ -178,7 +178,7 @@ function FilterBar({ active, onChange }) {
  * vela y precio) y lo abren en WhatsApp o en Gmail, listo para enviar.
  * - WhatsApp: solo aparece si hay WHATSAPP_NUMBER en config.js; si no,
  *   se muestra "Consultar", que lleva al formulario de contacto.
- * - Gmail: abre la pantalla de "Redactar" de Gmail con el correo de la
+ * - Correo: abre la pantalla de "Redactar" de Gmail con el correo de la
  *   tienda (CONTACT_EMAIL), el asunto y el mensaje ya escritos.
  */
 function OrderButtons({ candle }) {
@@ -215,7 +215,7 @@ function OrderButtons({ candle }) {
       {storeEmail && (
         <a className="btn btn-ghost btn-sm" style={btnStyle}
           href={gmailUrl} target="_blank" rel="noopener noreferrer">
-          Pedir por Correo Electrónico
+          Pedir por correo electrónico
         </a>
       )}
     </div>
