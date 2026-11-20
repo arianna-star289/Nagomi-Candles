@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi cuenta · Nagomi Candles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <style>
-.account-wrap{max-width:520px;margin:55px auto;padding:0 18px}.account-card{background:#fff;border:1px solid #eee2f4;border-radius:24px;padding:28px;box-shadow:0 12px 35px #44305a12}
+.account-wrap{max-width:520px;margin:10px auto 60px;padding:0 18px}.account-card{background:#fff;border:1px solid #eee2f4;border-radius:24px;padding:28px;box-shadow:0 12px 35px #44305a12}
 .account-tabs{display:flex;gap:8px;margin:20px 0}.account-tabs button{flex:1;padding:11px;border:1px solid #ded2e8;border-radius:12px;background:#faf7fc;cursor:pointer;font-weight:700}.account-tabs button.active{background:#d8c6f2;border-color:#bba6df}
 .account-card input{width:100%;padding:12px;border:1px solid #d9cde3;border-radius:10px;margin:6px 0 14px}.account-card label{font-weight:700}.account-note{font-size:.88rem;color:#6f6479}.account-status{min-height:24px;margin-top:12px}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="wrap header-inner"><a href="index.html" class="logo"><span class="logo-title">Nagomi<em>Candles</em></span></a><nav class="main-nav"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a href="contacto.html">Contacto</a></nav></div></header>
-<main class="account-wrap"><div class="account-card">
-<p class="eyebrow">Tu espacio Nagomi</p><h1>Bienvenido/a</h1><p class="account-note">Crea una cuenta para futuras compras o inicia sesión si ya tienes una.</p>
+
+<div class="bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" width="46" height="46" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#B9E7E4"/><stop offset="0.55" stop-color="#D8C6F2"/><stop offset="1" stop-color="#F7C6D9"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="url(#logoGrad)"/>
+        <path d="M2 80 Q 22 66, 42 80 T 82 80 T 122 80 V122 H2 Z" fill="#7FC4C8" opacity="0.65"/>
+        <path d="M2 92 Q 22 78, 42 92 T 82 92 T 122 92 V122 H2 Z" fill="#5AAEB3" opacity="0.75"/>
+        <path d="M60 40 C 55 48, 55 55, 60 60 C 65 55, 65 48, 60 40 Z" fill="#FFD897"/>
+        <path d="M60 46 C 57.5 50, 57.5 53.5, 60 56 C 62.5 53.5, 62.5 50, 60 46 Z" fill="#FFF3D6"/>
+        <path d="M92 30 l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fff" opacity="0.95"/>
+      </svg>
+      <span class="logo-text">
+        <span class="logo-title">Nagomi<em>Candles</em></span>
+        <span class="logo-slogan">respira el mar, enciende la calma</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" data-page="index.html">Inicio</a>
+      <a href="catalogo.html" data-page="catalogo.html">Catálogo</a>
+      <a href="contacto.html" data-page="contacto.html">Contacto</a>
+      <a href="cuenta.html" data-page="cuenta.html">Mi cuenta</a>
+      <a href="admin/login.html" class="nav-admin-link">Panel admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Tu espacio Nagomi</p>
+      <h1>Mi cuenta</h1>
+      <p>Crea una cuenta para tus futuras compras o inicia sesión si ya tienes una.</p>
+    </div>
+  </section>
+
+  <section class="account-wrap">
+    <div class="account-card">
+<h2 style="margin-top:0">Bienvenido/a</h2>
 <div class="account-tabs"><button type="button" class="active" data-mode="login">Iniciar sesión</button><button type="button" data-mode="register">Crear cuenta</button></div>
 <form id="accountForm">
 <div id="nameField" hidden><label for="customerName">Nombre</label><input id="customerName" autocomplete="name" minlength="2"></div>
@@ -21,8 +67,39 @@
 <label for="customerPassword">Contraseña</label><input id="customerPassword" type="password" required minlength="8" autocomplete="current-password">
 <p class="account-note" id="passwordHelp">Usa tu correo y contraseña para acceder a tu cuenta.</p>
 <button class="btn btn-primary btn-block" id="accountSubmit" type="submit">Iniciar sesión</button><p class="account-status" id="accountStatus" role="status"></p>
-</form></div></main>
-<script src="assets/js/config.js"></script><script src="assets/js/api.js"></script>
+</form></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="logo-title footer-logo">Nagomi<em>Candles</em></span>
+      <p class="footer-slogan">respira el mar, enciende la calma</p>
+    </div>
+    <div class="footer-contact">
+      <p><a href="mailto:ariannajibajaramirez@gmail.com">ariannajibajaramirez@gmail.com</a></p>
+      <p>@nagomicandles</p>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Nagomi Candles. Hecho con calma, en tandas pequeñas.</p>
+</footer>
+
+<button class="ai-toggle" id="aiToggle" aria-expanded="false" aria-controls="aiPanel" aria-label="Abrir asistente Nagomi">🌊</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="Asistente de Nagomi Candles">
+  <div class="ai-header"><strong>Asistente Nagomi</strong><span>Te ayudo a elegir tu aroma</span></div>
+  <div class="ai-body" id="aiBody"></div>
+  <div class="ai-quick" id="aiQuick"></div>
+  <form class="ai-input-row" id="aiForm">
+    <input type="text" id="aiInput" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/main.js"></script>
+<!-- Registro e inicio de sesión de clientes -->
 <script>
 (() => {
  const form=document.getElementById('accountForm'), nameField=document.getElementById('nameField'), name=document.getElementById('customerName'), email=document.getElementById('customerEmail'), password=document.getElementById('customerPassword'), submit=document.getElementById('accountSubmit'), status=document.getElementById('accountStatus');
@@ -30,4 +107,7 @@
  document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b===btn));nameField.hidden=mode!=='register';name.required=mode==='register';submit.textContent=mode==='register'?'Crear cuenta':'Iniciar sesión';password.autocomplete=mode==='register'?'new-password':'current-password';status.textContent='';}));
  form.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Procesando…';submit.disabled=true;try{const result=mode==='register'?await NagomiAPI.registerCustomer({name:name.value,email:email.value,password:password.value}):await NagomiAPI.loginCustomer(email.value,password.value);localStorage.setItem('nagomi_customer_session',JSON.stringify(result));status.textContent='¡Listo! Tu cuenta está activa. Ya puedes continuar con tu compra.';status.style.color='#287a55';}catch(err){status.textContent=err.message;status.style.color='#a33';}finally{submit.disabled=false;}});
 })();
-</script></body></html>
+</script>
+<script src="assets/js/ai-assistant.js"></script>
+</body>
+</html>
