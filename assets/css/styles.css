@@ -283,3 +283,16 @@ h1,h2,h3{ font-family: var(--font-display); color: var(--ink); margin: 0 0 .5em;
 .nagomi-whatsapp{position:fixed;right:22px;bottom:22px;z-index:1000;background:#218c59;color:#fff;text-decoration:none;font-weight:800;padding:13px 18px;border-radius:999px;box-shadow:0 8px 24px #173d2b35}
 .nagomi-whatsapp:hover{background:#176e45;transform:translateY(-2px)}
 @media(max-width:600px){.nagomi-whatsapp{right:12px;bottom:12px;padding:11px 14px;font-size:.88rem}}
+/* Botón flotante de WhatsApp a la IZQUIERDA,
+   para que no tape el botón del asistente 🌊 (que está a la derecha). */
+.nagomi-whatsapp {
+  left: 20px !important;
+  right: auto !important;
+}
+
+/* En celulares, un poco más pegado al borde */
+@media (max-width: 600px) {
+  .nagomi-whatsapp {
+    left: 12px !important;
+  }
+}
