@@ -302,18 +302,35 @@ function App() {
   //    navegador. Así, al cerrar sesión, aquí no queda nada de la cuenta.
   useEffect(() => {
     if (!token) return;
+    let cancelled = false;
     const guestFavs = loadFavorites();
-    NagomiAPI.getFavorites(token)
-      .then((res) => {
-        const merged = Array.from(new Set([...(res.ids || []), ...guestFavs]));
-        setFavorites(merged);
-        try { localStorage.removeItem(FAV_KEY); } catch (e) { /* nada */ }
-        setCloudReady(true);
-      })
-      .catch(() => {
-        // Sin servidor o sesión vencida: seguimos como visitante.
-        setCloudFailed(true);
-      });
+
+    // Pedimos las favoritas a la cuenta. Si falla (por ejemplo, el servidor
+    // está despertando), reintentamos hasta 3 veces, esperando 3 s entre
+    // intentos, antes de avisar que no se pudo conectar.
+    function load(attempt) {
+      NagomiAPI.getFavorites(token)
+        .then((res) => {
+          if (cancelled) return;
+          const merged = Array.from(new Set([...(res.ids || []), ...guestFavs]));
+          setFavorites(merged);
+          try { localStorage.removeItem(FAV_KEY); } catch (e) { /* nada */ }
+          setCloudReady(true);
+        })
+        .catch((err) => {
+          if (cancelled) return;
+          console.warn(`Favoritas: intento ${attempt} falló →`, err.message);
+          // Si la sesión venció, no tiene sentido reintentar.
+          const expired = /sesión|token|No encontramos/i.test(err.message || "");
+          if (attempt < 3 && !expired) {
+            setTimeout(() => load(attempt + 1), 3000);
+          } else {
+            setCloudFailed(true); // seguimos como visitante
+          }
+        });
+    }
+    load(1);
+    return () => { cancelled = true; };
   }, [token]);
 
   // Guardar cada cambio en el lugar que corresponde.

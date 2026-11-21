@@ -200,6 +200,11 @@ const NagomiAPI = (function () {
   // ---------- favoritas del cliente (requieren cuenta) ----------
   async function getFavorites(token) {
     await checkBackend();
+    if (!backendAvailable) {
+      // Puede que el servidor estuviera despertando: lo volvemos a revisar.
+      backendChecked = false;
+      await checkBackend();
+    }
     if (!backendAvailable) throw new Error("Las favoritas en la cuenta requieren el servidor.");
     return request("/favorites", { headers: { Authorization: `Bearer ${token}` } });
   }
