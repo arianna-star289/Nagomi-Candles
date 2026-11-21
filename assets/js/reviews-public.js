@@ -48,23 +48,40 @@
 
   box.innerHTML = '<div class="state-box"><div class="spinner"></div>Cargando opiniones…</div>';
 
-  NagomiAPI.getPublicReviews()
-    .then((reviews) => {
-      if (!Array.isArray(reviews) || !reviews.length) return showEmpty();
-      box.innerHTML = "";
-      const grid = el("div", "reviews-grid");
-      reviews.slice(0, MAX).forEach((r) => {
-        const card = el("article", "review-card");
-        const rating = Math.max(1, Math.min(5, Number(r.rating) || 5));
-        const stars = el("div", "review-stars", "★".repeat(rating) + "☆".repeat(5 - rating));
-        stars.setAttribute("aria-label", `${rating} de 5 estrellas`);
-        card.appendChild(stars);
-        card.appendChild(el("p", "review-text", `“${r.comment}”`));
-        card.appendChild(el("div", "review-name", r.name));
-        card.appendChild(el("div", "review-date", formatDate(r.createdAt)));
-        grid.appendChild(card);
+  // Si el servidor no responde a la primera (por ejemplo, está despertando),
+  // reintentamos hasta 3 veces, esperando 3 s entre intentos.
+  function load(attempt) {
+    NagomiAPI.getPublicReviews()
+      .then(render)
+      .catch((err) => {
+        console.warn(`Opiniones: intento ${attempt} falló →`, err.message);
+        if (attempt < 3) setTimeout(() => load(attempt + 1), 3000);
+        else showError();
       });
-      box.appendChild(grid);
-    })
-    .catch(showEmpty); // si falla, no rompemos la página
+  }
+
+  function showError() {
+    box.innerHTML = "";
+    box.appendChild(el("p", "reviews-empty", "No pudimos cargar las opiniones en este momento. Recarga la página en unos segundos."));
+  }
+
+  function render(reviews) {
+    if (!Array.isArray(reviews) || !reviews.length) return showEmpty();
+    box.innerHTML = "";
+    const grid = el("div", "reviews-grid");
+    reviews.slice(0, MAX).forEach((r) => {
+      const card = el("article", "review-card");
+      const rating = Math.max(1, Math.min(5, Number(r.rating) || 5));
+      const stars = el("div", "review-stars", "★".repeat(rating) + "☆".repeat(5 - rating));
+      stars.setAttribute("aria-label", `${rating} de 5 estrellas`);
+      card.appendChild(stars);
+      card.appendChild(el("p", "review-text", `“${r.comment}”`));
+      card.appendChild(el("div", "review-name", r.name));
+      card.appendChild(el("div", "review-date", formatDate(r.createdAt)));
+      grid.appendChild(card);
+    });
+    box.appendChild(grid);
+  }
+
+  load(1);
 })();

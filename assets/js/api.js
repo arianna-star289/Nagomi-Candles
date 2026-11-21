@@ -189,7 +189,12 @@ const NagomiAPI = (function () {
   // Opiniones aprobadas por la administradora (públicas, sin login).
   async function getPublicReviews() {
     await checkBackend();
-    if (!backendAvailable) return []; // en modo demo no mostramos opiniones
+    if (!backendAvailable) {
+      // Puede que el servidor estuviera despertando: lo volvemos a revisar.
+      backendChecked = false;
+      await checkBackend();
+    }
+    if (!backendAvailable) throw new Error("El servidor no respondió.");
     return request("/reviews");
   }
 
