@@ -186,6 +186,13 @@ const NagomiAPI = (function () {
     return request("/reviews", { method: "POST", body: JSON.stringify(payload) });
   }
 
+  // Opiniones aprobadas por la administradora (públicas, sin login).
+  async function getPublicReviews() {
+    await checkBackend();
+    if (!backendAvailable) return []; // en modo demo no mostramos opiniones
+    return request("/reviews");
+  }
+
   async function getReviews(token) {
     await checkBackend();
     if (!backendAvailable) throw new Error("Las opiniones requieren el backend publicado.");
@@ -290,6 +297,6 @@ const NagomiAPI = (function () {
     checkBackend, isDemoMode,
     getProducts, createProduct, updateProduct, deleteProduct,
     sendMessage, getMessages, markMessageRead,
-    login, registerCustomer, loginCustomer, getFavorites, saveFavorites, sendReview, getReviews, approveReview, aiRecommend, aiAsk
+    login, registerCustomer, loginCustomer, getFavorites, saveFavorites, sendReview, getPublicReviews, getReviews, approveReview, aiRecommend, aiAsk
   };
 })();
