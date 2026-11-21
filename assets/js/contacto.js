@@ -74,15 +74,27 @@
     if (mailtoLink) mailtoLink.parentElement.style.display = "none";
   }
 
+  // En el celular, el enlace web de Gmail abre la bandeja de entrada y
+  // pierde el mensaje; ahí usamos "mailto:", que abre la app de correo del
+  // teléfono con todo ya escrito. En computadora seguimos usando Gmail web.
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+
   if (gmailBtn && storeEmail) {
+    if (isMobile) {
+      gmailBtn.removeAttribute("target");
+      gmailBtn.textContent = "✉️ Enviar por correo";
+    }
     gmailBtn.addEventListener("click", (e) => {
       if (!requireMessage(e)) return;
       const { subject, body } = buildEmail();
-      // Enlace oficial de Gmail para "redactar" un correo nuevo.
-      gmailBtn.href = "https://mail.google.com/mail/?view=cm&fs=1" +
-        `&to=${encodeURIComponent(storeEmail)}` +
-        `&su=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(body)}`;
+      gmailBtn.href = isMobile
+        ? `mailto:${storeEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+        // Enlace oficial de Gmail para "redactar" un correo nuevo.
+        : "https://mail.google.com/mail/?view=cm&fs=1" +
+          `&to=${encodeURIComponent(storeEmail)}` +
+          `&su=${encodeURIComponent(subject)}` +
+          `&body=${encodeURIComponent(body)}`;
     });
   }
 

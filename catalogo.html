@@ -178,7 +178,7 @@ function FilterBar({ active, onChange }) {
  * vela y precio) y lo abren en WhatsApp o en Gmail, listo para enviar.
  * - WhatsApp: solo aparece si hay WHATSAPP_NUMBER en config.js; si no,
  *   se muestra "Consultar", que lleva al formulario de contacto.
- * - Correo: abre la pantalla de "Redactar" de Gmail con el correo de la
+ * - Correo: en el celular abre la app de correo (mailto); en computadora, la pantalla de "Redactar" de Gmail con el correo de la
  *   tienda (CONTACT_EMAIL), el asunto y el mensaje ya escritos.
  */
 function OrderButtons({ candle }) {
@@ -191,10 +191,19 @@ function OrderButtons({ candle }) {
   const greeting = customer ? `Hola, soy ${customer.name}. ` : "Hola, ";
   const orderText = `${greeting}quiero pedir la vela ${candle.name} por $${candle.price}. ¿Me pueden confirmar disponibilidad?`;
 
-  const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
-    "&to=" + encodeURIComponent(storeEmail) +
-    "&su=" + encodeURIComponent("Pedido: " + candle.name + " - Nagomi Candles") +
-    "&body=" + encodeURIComponent(orderText);
+  // Correo: en computadora abrimos "Redactar" de Gmail en la web. En el
+  // celular ese enlace abre la bandeja de entrada y pierde el mensaje, así
+  // que usamos "mailto:", que abre la app de correo del teléfono (Gmail,
+  // Outlook…) con destinatario, asunto y mensaje ya escritos.
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+  const subject = "Pedido: " + candle.name + " - Nagomi Candles";
+  const emailUrl = isMobile
+    ? "mailto:" + storeEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(orderText)
+    : "https://mail.google.com/mail/?view=cm&fs=1" +
+      "&to=" + encodeURIComponent(storeEmail) +
+      "&su=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(orderText);
 
   const btnStyle = { flex: "1 1 120px", textAlign: "center" };
 
@@ -214,7 +223,7 @@ function OrderButtons({ candle }) {
       )}
       {storeEmail && (
         <a className="btn btn-ghost btn-sm" style={btnStyle}
-          href={gmailUrl} target="_blank" rel="noopener noreferrer">
+          href={emailUrl} target={isMobile ? undefined : "_blank"} rel="noopener noreferrer">
           Pedir por correo electrónico
         </a>
       )}
